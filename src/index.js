@@ -1,12 +1,46 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
+import Button from "./components/Button";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// import "./styles.css";
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+function App() {
+  const [count, setCount] = useState(0);
+  const [counts, addCount] = useState([]);
+
+  const incrementCount = increment => {
+    setCount(count + increment);
+  };
+  const reset = () => {
+    setCount(0);
+  };
+  const saveCount = value => {
+    // counts.push(count);
+    addCount([...counts, count]);
+  };
+  return (
+    <div className="App">
+      <Button increment={1} onClickFunction={incrementCount} />
+      <Button increment={10} onClickFunction={incrementCount} />
+      <Button increment={100} onClickFunction={incrementCount} />
+      <Button increment={1000} onClickFunction={incrementCount} />
+      <br />
+      <Button increment={-1} onClickFunction={incrementCount} />
+      <Button increment={-10} onClickFunction={incrementCount} />
+      <Button increment={-100} onClickFunction={incrementCount} />
+      <Button increment={-1000} onClickFunction={incrementCount} />
+      <br />
+      <Button increment={"RESET"} onClickFunction={reset} />
+      <Button increment={"SAVE"} onClickFunction={saveCount} />
+      <span>{count}</span>
+      <br />
+      List
+      {counts.map((i, k) => {
+        return <div keys={k}> {i}</div>;
+      })}
+    </div>
+  );
+}
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
